@@ -36,6 +36,21 @@ function Gameboard() {
       console.log(boardWithCellValues);
     };
 
-    
+    return {getBoard, placeItem, printBoard};
 
+}
+
+function Cell() {
+    let val = 0;
+
+    const addItem = (player) => {
+        val = player;
+    };
+
+    const getValue = () => val;
+
+    return {
+        addItem,
+        getValue
+    };
 }
