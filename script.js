@@ -15,11 +15,21 @@ function Gameboard() {
 
     const placeItem = (column, player) => {
         const openCells = board.filter((row) => 
-        row[column].getValue() === 0).map(row =>
-        row[column]);
+        row[column].getValue() === 0).map((row, index) =>
+        ({cell: row[column], rowIndex: index }));
+
+        const targetCell = openCells.find(cell => cell.rowIndex === rowIndex);
+
+        if(targetCell) {
+            board[rowIndex][column].addItem(player);
+            return true;
+        }
+        else {
+            return false;
+        }
+
+        
     }
 
-    if (!placeItem.length) {
-        return;
-    }
+
 }
