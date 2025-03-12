@@ -13,6 +13,8 @@ function Gameboard() {
         }
     }
 
+    const getBoard = () => board;
+
     const placeItem = (column, player) => {
         const openCells = board.filter((row) => 
         row[column].getValue() === 0).map((row, index) =>
@@ -26,10 +28,14 @@ function Gameboard() {
         }
         else {
             return false;
-        }
+        }  
+    };
 
-        
-    }
+    const printBoard = () => {
+      const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()))
+      console.log(boardWithCellValues);
+    };
 
+    
 
 }
