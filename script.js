@@ -50,3 +50,54 @@ function Cell() {
     };
 }
 
+function GameController (
+    playerOneName = "Player One",
+    playerTwoName = "Player Two"
+) {
+    const board = Gameboard();
+
+    const players = [
+        {
+            name: playerOneName,
+            token: 1
+        },
+        {
+            name: playerTwoName,
+            token: 2
+        }
+    ];
+    let activePlayer = players[0];
+
+    const switchPlayerTurn = () => {
+        activePlayer = activePlayer === players[0] ? players[1] : players[0];
+    };
+    const getActivePlayer = () => activePlayer;
+
+    const printNewRound = () => {
+        board.printBoard();
+        console.log("In printNewRound");
+        console.log(`${getActivePlayer().name}'s turn.`);
+    };
+
+    const playRound = (column, rowIndex) => {
+        console.log(
+            `Placing
+            ${getActivePlayer().name}'s token on board`
+        );
+        board.placeItem(column, rowIndex, getActivePlayer().token);
+        console.log(getActivePlayer().token);
+
+        switchPlayerTurn();
+        printNewRound();
+
+    };
+    printNewRound();
+
+    return {
+        playRound,
+        getActivePlayer
+    };
+}
+
+const game = GameController();
+
