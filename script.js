@@ -15,25 +15,20 @@ function Gameboard() {
 
     const getBoard = () => board;
 
-    const placeItem = (column, player) => {
-        const openCells = board.filter((row) => 
-        row[column].getValue() === 0).map((row, index) =>
-        ({cell: row[column], rowIndex: index }));
-
-        const targetCell = openCells.find(cell => cell.rowIndex === rowIndex);
-
-        if(targetCell) {
+    const placeItem = (column, rowIndex, player) => {
+        if (board[rowIndex][column].getValue() === 0) {
             board[rowIndex][column].addItem(player);
             return true;
         }
         else {
             return false;
-        }  
+        }
     };
 
     const printBoard = () => {
       const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()))
       console.log(boardWithCellValues);
+      console.log("In printBoard");
     };
 
     return {getBoard, placeItem, printBoard};
@@ -54,3 +49,4 @@ function Cell() {
         getValue
     };
 }
+
