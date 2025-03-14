@@ -68,10 +68,6 @@ function Gameboard() {
     const printBoard = () => {
       const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()))
       console.log(boardWithCellValues);
-      //console.log("In printBoard");
-      //console.log("BORAD IS: ")
-      //console.log(checkScore(board));
-      //console.log("HELLLO");
     };
 
 
@@ -99,6 +95,7 @@ function GameController (
     playerTwoName = "Player Two"
 ) {
     const board = Gameboard();
+    let gameOver = false;
 
     const players = [
         {
@@ -119,23 +116,27 @@ function GameController (
 
     const printNewRound = () => {
         board.printBoard();
-        //console.log("In printNewRound");
         console.log(`${getActivePlayer().name}'s turn.`);
     };
 
     const playRound = (column, rowIndex) => {
+        if (gameOver) {
+            console.log("The Game is over!");
+            return;
+        }
+
         console.log(
             `Placing
             ${getActivePlayer().name}'s token on board`
         );
         const place = board.placeItem(column, rowIndex, getActivePlayer().token);
-        //console.log(getActivePlayer().token);
 
         if (place) {
             console.log("In place");
             if (board.checkWinner(getActivePlayer().token)) {
                 board.printBoard();
-                console.log(`${getActivePlayer().name} wins!`)
+                console.log(`${getActivePlayer().name} wins!`);
+                gameOver = true;
                 return;
             }
             console.log(`${board.checkWinner(getActivePlayer.token)}: is value of winner`);
