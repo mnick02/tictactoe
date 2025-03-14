@@ -21,6 +21,7 @@ function Gameboard() {
             return true;
         }
         else {
+            console.log("Can't place that there!")
             return false;
         }
     };
