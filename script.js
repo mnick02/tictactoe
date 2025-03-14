@@ -105,7 +105,7 @@ function GameController (
     playerOneName = "Player One",
     playerTwoName = "Player Two"
 ) {
-    const board = Gameboard();
+    let board = Gameboard();
     let gameOver = false;
 
     const players = [
@@ -154,7 +154,7 @@ function GameController (
         }
 
         if (board.isBoardFull()){
-            board.printBoard;
+            board.printBoard();
             console.log("It's a tie!")
             gameOver = true;
             return;
@@ -164,11 +164,20 @@ function GameController (
         printNewRound();
 
     };
+
+    const resetGame = () => {
+        board = Gameboard();
+        gameOver = false;
+        activePlayer = players[0];
+        printNewRound();
+    };
+
     printNewRound();
 
     return {
         playRound,
-        getActivePlayer
+        getActivePlayer,
+        resetGame
     };
 }
 
