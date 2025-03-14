@@ -63,6 +63,17 @@ function Gameboard() {
 
         return false;
     }
+
+    const isBoardFull = () => {
+        for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < columns; j++) {
+                if (board[i][j].getValue() === 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     
 
     const printBoard = () => {
@@ -71,7 +82,7 @@ function Gameboard() {
     };
 
 
-    return {getBoard, placeItem, checkWinner, printBoard};
+    return {getBoard, placeItem, checkWinner, printBoard, isBoardFull};
 
 }
 
@@ -140,6 +151,13 @@ function GameController (
                 return;
             }
             console.log(`${board.checkWinner(getActivePlayer.token)}: is value of winner`);
+        }
+
+        if (board.isBoardFull()){
+            board.printBoard;
+            console.log("It's a tie!")
+            gameOver = true;
+            return;
         }
 
         switchPlayerTurn();
