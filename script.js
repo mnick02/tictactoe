@@ -193,9 +193,23 @@ function GameController (
 //const game = GameController();
 
 function ScreenController() {
-    const game = GameController();
+    let game = GameController();
     const playerTurnDiv = document.querySelector(".turn");
     const boardDiv = document.querySelector(".board");
+
+    const submitBtn = document.getElementById("subBtn");
+    submitBtn.addEventListener("click", () => {
+        //e.preventDefault();
+        const p1 = document.getElementById("p1").value;
+        const p2 = document.getElementById("p2").value;
+        console.log("in e listener");
+        
+        if (p1 || p2) {
+            game = GameController(p1 || "Player One", p2 || "Player Two");
+        }
+
+        updateScreen();
+    });
 
     const updateScreen = () => {
         boardDiv.textContent = "";
