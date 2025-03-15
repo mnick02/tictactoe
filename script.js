@@ -109,6 +109,11 @@ function GameController (
     let board = Gameboard();
     let gameOver = false;
 
+    const getGameState = () => gameOver;
+
+    const getBoard = () => board.getBoard();
+    const isBoardFull = () => board.isBoardFull();
+
     const players = [
         {
             name: playerOneName,
@@ -178,9 +183,61 @@ function GameController (
     return {
         playRound,
         getActivePlayer,
+        getBoard,
+        getGameState,
+        isBoardFull,
         resetGame
     };
 }
 
-const game = GameController();
+//const game = GameController();
 
+function ScreenController() {
+    const game = GameController();
+    const playerTurnDiv = document.querySelector(".turn");
+    const boardDiv = document.querySelector(".board");
+
+    const updateScreen = () => {
+        boardDiv.textContent = "";
+
+        const board = game.getBoard();
+        let activePlayer = game.getActivePlayer();
+
+
+        playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+
+        if (game.getGameState() === true) {
+            console.log("in if gameOver");
+            if (game.isBoardFull()) {
+                playerTurnDiv.textContent = `GAME OVER! It's a tie!`;
+            }
+            else {
+                playerTurnDiv.textContent = `GAME OVER! ${activePlayer.name} wins`;
+            }
+        }
+
+        board.forEach((row, rowIndex) => {
+            row.forEach((cell, columnIndex) => {
+                const cellButton = document.createElement("button");
+                cellButton.classList.add("cell");
+                cellButton.dataset.column = columnIndex;
+                cellButton.dataset.row = rowIndex;
+                cellButton.textContent = cell.getValue();
+                boardDiv.appendChild(cellButton);
+            });
+        });
+    }
+
+    function clickHandlerBoard(e) {
+        const selectedColumn = e.target.dataset.column;
+        const selectedRow = e.target.dataset.row;
+
+        if (!selectedColumn) return;
+        game.playRound(selectedColumn, selectedRow);
+        updateScreen();
+    }
+    boardDiv.addEventListener("click", clickHandlerBoard);
+    updateScreen();
+}
+
+ScreenController();
