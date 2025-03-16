@@ -211,6 +211,13 @@ function ScreenController() {
         updateScreen();
     });
 
+    const resetBtn = document.getElementById("reset");
+        resetBtn.addEventListener("click", () => {
+            console.log("in resetBtn");
+            playerTurnDiv.textContent = "Game has been reset, click on board to begin new game";
+            game.resetGame();
+    });
+
     const updateScreen = () => {
         boardDiv.textContent = "";
 
